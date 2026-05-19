@@ -2164,5 +2164,7 @@
 @if (Route::has('login'))
     <div class="h-14.5 hidden lg:block"></div>
 @endif
+<script src="{{ asset('js/type-fields-filter.js') }}"></script>
+<script src="{{ asset('js/visitor-counter.js') }}" data-endpoint="{{ url('/api/v1/visits') }}"></script>
 </body>
 </html>
