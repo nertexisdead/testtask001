@@ -27,5 +27,8 @@ php artisan migrate
 echo "=== Run install mc ==="
 apt install mc
 
+echo "=== Starting cron ==="
+service cron start
+
 echo "=== Run /usr/sbin/php-fpm8.4 -O ==="
 /usr/sbin/php-fpm8.4 -O

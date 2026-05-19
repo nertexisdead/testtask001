@@ -10,7 +10,8 @@ RUN apt update \
     php8.4-xmlreader \
     php8.4-zip \
     php8.4-gd \
-    nano
+    nano \
+    cron
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash \
     && apt-get install -y nodejs \
@@ -20,5 +21,10 @@ RUN mkdir -p /opt/laravel_setup
 COPY ./deploy/laravel/entrypoint_local.sh /opt/laravel_setup/
 COPY ./deploy/laravel/.env_local /opt/laravel_setup/
 RUN chmod +x /opt/laravel_setup/entrypoint_local.sh
+
+RUN echo "* * * * * cd /application && php artisan schedule:run >> /var/log/cron.log 2>&1" > /etc/cron.d/laravel \
+    && chmod 0644 /etc/cron.d/laravel \
+    && crontab /etc/cron.d/laravel \
+    && touch /var/log/cron.log
 
 ENTRYPOINT ["/opt/laravel_setup/entrypoint_local.sh"]
